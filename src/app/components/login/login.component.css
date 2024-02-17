@@ -1,0 +1,25 @@
+
+.form-signin 
+{
+    width: 500px;
+    margin: 0 auto;
+    
+ }
+ mat-form-field{
+  width: 500px;
+
+ }
+ .custom-mat-form-field {
+  background-color: white;
+}
+ 
+ .f1
+ {
+    display: flex;
+ }
+
+ input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }

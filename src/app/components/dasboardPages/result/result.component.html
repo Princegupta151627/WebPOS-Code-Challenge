@@ -1,0 +1,74 @@
+<div   class="container-fluid ">
+
+  <div style="display: flex; justify-content: flex-start;">
+    <form [formGroup]="form">
+
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Academic Term</mat-label>
+        <mat-select formControlName="acedTerm" >
+          <mat-option *ngFor="let acc of readData" [value]="acc">{{acc}}</mat-option>
+    </mat-select>
+
+    <mat-error>Academic Term is required*</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Program Term</mat-label>
+        <mat-select formControlName="progTerm" >
+         
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+          <mat-option [value]="4">4</mat-option>
+          <mat-option [value]="5">5</mat-option>
+          <mat-option [value]="6">6</mat-option>
+    </mat-select>
+    <mat-error>Program Term is required</mat-error>
+
+      </mat-form-field>
+      <!-- <button class="btn btn-primary active m-1" (click)="searchDetails()"> Search</button> -->
+      <button class="btn btn-primary active m-1" (click)="searchDetails()" [disabled]="!form.valid"> Search</button>
+
+
+    </form>
+  </div>
+
+  <div *ngIf="noResponseError">
+   <div>
+    <h3  style="display: flex;   justify-content: center;"> <b> Roll Number : {{readData2.rollNumber}} </b> </h3>
+    <h3  style="display: flex;   justify-content: center;"> <b>Student Name : {{readData2.studentName}} </b> </h3>
+    <h2  style="display: flex;   justify-content: center; font-weight: bold;">MARKS DETAILS</h2>
+   </div>
+ 
+   <div id="table-container">
+    <table>
+      <thead>
+        <tr class="bg-dark text-white">
+          <th scope="col">COURSE TITLE</th>
+          <th scope="col">TYPE</th>
+          <th scope="col">MARKS OBTAINED</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let us of readData2.terminalMarksResList">
+          <th scope="row">{{us.courseTitle}}</th>
+          <td>{{us.type}}</td>
+          <td>{{us.marks}}</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+  </div>
+  </div>
+
+</div>
+
+<div *ngIf="ResponseError" class="container-fluid" id="errorMSG">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div>
+      <h1 class="text-danger"><i class="bi bi-x"></i> No Record Found !</h1>
+    </div>
+  </div>
+</div>

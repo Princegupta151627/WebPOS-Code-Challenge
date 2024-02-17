@@ -1,0 +1,84 @@
+
+<div class="container-fluid ">
+
+    <div class="page_box p-3 mt-2" style="color: aliceblue;">
+        Elective Paper
+      </div>
+
+    <div class="page_content shadow p-3 position-relative">
+        <div class="page_content-data position-absolute">
+    </div>
+
+  <div style="display: flex; justify-content: flex-start;">
+    <form [formGroup]="form">
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type" >
+          <mat-option [value]="'New Syllabus'">New Syllabus</mat-option>
+          <mat-option [value]="'Old Syllabus'">Old Syllabus</mat-option>
+    </mat-select>
+    <mat-error>Type is required*</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Semester</mat-label>
+        <mat-select formControlName="semester" >
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+          <mat-option [value]="4">4</mat-option>
+          <mat-option [value]="5">5</mat-option>
+          <mat-option [value]="6">6</mat-option>
+    </mat-select>
+    <mat-error>Semester is required</mat-error>
+      </mat-form-field>
+
+       <mat-form-field appearance="fill" class="full-width"  >
+        <mat-label>Program</mat-label>
+        <mat-select formControlName="program" >
+          <mat-option *ngFor="let data of programTermData" [value]="data.programTermId" >
+            {{ data.programTerm }}
+        </mat-option>
+              </mat-select>
+       <mat-error>Program is required</mat-error>
+      </mat-form-field> 
+
+      <button class="btn btn-primary active m-1" (click)="getAllElectivePaperList()"> Get Data</button>
+    </form>
+  </div>
+  
+
+
+
+<form class="m-2" *ngIf="getAllElectivePaperData != null">
+
+    <div *ngFor="let data of getAllElectivePaperData; let i = index">
+      <h2>
+        <span> {{i+1}} .</span>
+      <span *ngIf=" data.types == 'P' "> Practical </span>
+      <span *ngIf=" data.types == 'T' "> Theory </span>
+      <span *ngIf=" data.types == 'S' "> Sessional </span>
+      <!-- {{ 'Elective Paper Subject-' + (i + 1) }}  -->
+      {{ 'Elective Paper '}} 
+
+      </h2>
+      <mat-radio-group [(ngModel)]="selectedValues[i]" name="papers">
+        <ul *ngFor="let name of data.names;let j = index">
+            <li>
+                <mat-radio-button [value]="name" [class.custom-radio-icon]="selectedValues[i] === name" (change)="selectedSubjectList( data.codeOp[j],data.types,j,name)">
+                    {{ data.types }} {{ data.codeOp[j] }} - {{ name }}
+                </mat-radio-button>
+            </li>
+        </ul>
+    </mat-radio-group>
+
+  </div>
+  <button class="btn btn-success" (click)="saveElectivePaper()">Save</button>
+  
+</form>
+
+
+</div>
+</div>
+

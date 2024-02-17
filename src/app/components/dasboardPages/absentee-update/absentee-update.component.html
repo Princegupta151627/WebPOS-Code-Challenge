@@ -1,0 +1,52 @@
+<div class="container-fluid ">
+    <div class="page_box p-3 mt-2" style="color: aliceblue;">
+      Absentee Update
+    </div>
+    <div class="page_content shadow p-3 position-relative">
+      <div class="page_content-data position-absolute">
+      </div>
+      <form [formGroup]="form">
+       
+         <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Academic Term</mat-label>
+          <mat-select formControlName="acedTerm" required>
+            <mat-option *ngFor="let acc of academicTermData" [value]="acc">{{acc}}</mat-option>
+          </mat-select>
+        <mat-error>Academic Term is required*</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Term</mat-label>
+          <mat-select formControlName="term" required>       
+            <mat-option [value]="1">1</mat-option>
+            <mat-option [value]="2">2</mat-option>
+            <mat-option [value]="3">3</mat-option>    
+            <mat-option [value]="4">4</mat-option>           
+            <mat-option [value]="5">5</mat-option>           
+            <mat-option [value]="6">6</mat-option>           
+           </mat-select>
+         <mat-error>Term is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Institute</mat-label>
+          <mat-select formControlName="examType" required>
+            <mat-option *ngFor="let data of instituteList" [value]="data">{{data}}</mat-option>
+          </mat-select>
+        <mat-error>Institute is required</mat-error>
+        </mat-form-field>
+  
+       
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Program </mat-label>
+          <mat-select formControlName="progTerm" >
+            <mat-option *ngFor="let data of programTermData" [value]="data.programTermId">{{data.programTerm}}</mat-option>       
+        </mat-select>
+        <mat-error>Institute is required</mat-error>
+
+      </mat-form-field>
+  
+        <button mat-raised-button class="btn" > Get Details </button>
+  
+      </form>
+  </div>
+  </div>

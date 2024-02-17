@@ -1,0 +1,37 @@
+*{
+  height: 100%;
+}
+.menuClose{
+  width: 60px;
+}
+.menuOpen{
+  width: 260px;
+}
+mat-drawer{ 
+    background:  linear-gradient(to bottom, rgb(16, 24, 82), #797e86);
+    height: 100%;
+    padding: 9px;
+}
+mat-drawer-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+mat-drawer-content{
+  width: auto;
+  
+}
+
+@media screen and (orientation: portrait){
+mat-drawer-container{
+  width: 100%;
+}
+mat-drawer-content{
+  width: auto;
+}
+small{
+  display: none;
+}
+
+}

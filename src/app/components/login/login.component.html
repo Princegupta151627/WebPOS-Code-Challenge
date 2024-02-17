@@ -1,0 +1,59 @@
+
+
+<div class="container-fluid" >  
+    <header>
+        <img src="../../../assets/sbtebanner.png" width="100%" style="margin-top: 8px; display: flex; justify-content: center;">
+    </header> 
+    <div >
+      <form [formGroup]="formData"  class="form-signin">
+     
+  <div style="text-align:center;">
+      <h1 style="color: rgb(51, 22, 116);">                
+         
+      </h1>
+      <div> <img src="../../../assets/sbte.png" height="80" width="80"></div>
+      </div>
+      <dt class="mt-1" style="color: rgb(51, 22, 116);">UserId</dt>
+
+      <mat-form-field appearance="fill"   class="full-width">
+        <!-- <mat-label  class="m-1" style="color: rgb(51, 22, 116);">Email/UserId</mat-label> -->
+
+      <input matInput type="text" 
+          formControlName="userid" placeholder="Enter your UserId" required autofocus>
+      
+      <mat-error>UserId is Required</mat-error>
+
+    </mat-form-field>
+
+
+      <dt style="color: rgb(51, 22, 116);">Password</dt>
+      <mat-form-field appearance="fill" class="full-width">
+        <input matInput type="password"  
+          formControlName="password" placeholder="Password" required>
+          <mat-error>Password is Required</mat-error>
+
+        </mat-form-field>
+          <div class="d-grid">
+          <button [disabled]="loading" [disabled]="!formData.valid"  class="btn " style="background: radial-gradient(circle, rgb(16, 24, 82), #797e86); color: white;" (click)="onClickSubmit()">
+           <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+           Login
+       </button>
+       </div>
+       <div style="display: flex; justify-content: space-between;">
+       <div>
+        <p class="btn mb-3 pb-lg-2" style="color: #393f81;"> Don't have an account? <a style="text-decoration-line: underline;" (click)="registration()">Register Here</a></p>
+          </div>
+
+          <div >
+            <p  class="btn mb-3 pb-lg-2" style="color: #393f81;"><a style="text-decoration-line: underline;"> Forgot Password</a></p>
+          </div>
+          </div>
+          
+      </form>
+      </div>
+      
+  </div>
+             
+               
+            
+         

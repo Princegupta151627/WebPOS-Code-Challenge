@@ -1,0 +1,391 @@
+<div class="container-fluid ">
+  <div class="page_box p-3 mt-2" style="color: aliceblue;">
+    <span mat-raised-button class="btn btn-lg mt-1 p-2" style="color: white;"></span>
+    Marks Entry
+  </div>
+  <div class="page_content shadow p-3 position-relative">
+    <div class="page_content-data position-absolute">
+    </div>
+    <form [formGroup]="form">
+      <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Task</mat-label>
+          <mat-select formControlName="searchOption" required>
+            <mat-option value="ALL">ALL</mat-option>
+            <mat-option value="Completed">Completed</mat-option>
+            <mat-option value="Pending">Pending</mat-option>          
+          </mat-select>
+         <mat-error>Task name is required*</mat-error>
+       </mat-form-field>
+       <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Academic Term</mat-label>
+        <mat-select formControlName="acedTerm" required>
+          <mat-option *ngFor="let acc of academicTermData" [value]="acc">{{acc}}</mat-option>
+        </mat-select>
+      <mat-error>Academic Term is required*</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Term</mat-label>
+        <mat-select formControlName="term" required>       
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>    
+          <mat-option [value]="4">4</mat-option>           
+          <mat-option [value]="5">5</mat-option>           
+          <mat-option [value]="6">6</mat-option>           
+         </mat-select>
+       <mat-error>Term is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width"  style="width: 20vw;">
+        <mat-label>Exam Type</mat-label>
+        <mat-select formControlName="examType" required>
+          <mat-option *ngFor="let data of getExamTypeNames" [value]="data">{{data}}</mat-option>
+        </mat-select>
+      <mat-error>Exam Type is required*</mat-error>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Institute</mat-label>
+          <mat-select formControlName="institute" >
+            <mat-option *ngFor="let data of instituteList" [value]="data.id">{{data.name}}</mat-option>       
+        </mat-select>
+      </mat-form-field> -->
+
+
+      <!-- <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Program </mat-label>
+        <mat-select formControlName="progTerm" >
+          <mat-option *ngFor="let data of programTermData" value={{data.programTermId}}>{{data.programTerm}}</mat-option>       
+      </mat-select>
+    </mat-form-field> -->
+    <mat-form-field appearance="fill" class="full-width" style="width: 20vw;" formControlName="progTerm">
+      <mat-label>Select Program</mat-label>
+      <input type="text"
+             placeholder="Select Program"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto"
+             [(ngModel)]="searchProg">
+      <mat-autocomplete #auto="matAutocomplete" >
+        <mat-option *ngFor="let option of programTermData | programterm: searchProg" [value]="option.programTerm">
+          {{ option.programTerm }}
+        </mat-option>
+      </mat-autocomplete>
+      </mat-form-field>
+      <button class="btn btn-primary active m-1"  (click)="showBulkRecords()"> Search </button>
+
+    </form>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th> ID </th>
+          <th>SUBJECT</th>
+          <th scope="col">OPR 1</th>
+          <th scope="col">OPR 2</th>
+          <th scope="col">COMPILER</th>
+          <th scope="col">INSTITUTE</th>
+          <th scope="col">PROGRAM</th>
+          <th scope="col">COUNT</th>
+          <th scope="col">COMPILER</th>
+          <th scope="col">OPERATOR 1</th>
+          <th scope="col">OPERATOR 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of showBulkRecordData;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{data.task_id}}</td>
+          <td>{{data.subject}}</td>
+          <td>
+          <span *ngIf="data.opr1 == true" class="text-success"> Completed </span>
+          <span *ngIf="data.opr1 == false" class="text-danger"> Not completed </span>
+         </td>
+         <td>
+          <span *ngIf="data.opr2 == true" class="text-success"> Completed </span>
+          <span *ngIf="data.opr2 == false"  class="text-danger"> Not completed </span>
+         </td>
+         <td>
+          <span *ngIf="data.compiler == true" class="text-success"> Completed </span>
+          <span *ngIf="data.compiler == false"  class="text-danger"> Not completed </span>
+         </td>
+          <td>{{data.instituteName}}</td>
+          <td>{{data.progName}}</td>
+          <td>{{data.count}}</td>
+
+          <!-- <td class="text-primary" (click)="destroyShowCompilerRecordData()" (click)="open3(content3)"  (click)="compilerClick(data)">Compiler</td> -->
+
+          <td class="text-primary" *ngIf="data.compiler == false" (click)="destroyShowCompilerRecordData()" (click)="open3(content3)"  (click)="compilerClick(data)">Compiler</td>
+          <td class="text-success" *ngIf="data.compiler == true" (click)="destroyShowCompilerRecordData()" (click)="open3(content3)"  (click)="compilerClick(data)"> <i class="bi bi-eye-fill text"></i> View</td>
+
+
+           <td class="text-primary" *ngIf="data.opr1 == false" (click)="open(content)" (click)="operator1ButtonClick(data,'Operator1')">Operator-1</td>
+           <td class="text-success" *ngIf="data.opr1 == true" (click)="open(content)" (click)="viewEtriesByOperators(data,'Operator1')"> <i class="bi bi-eye-fill text"></i> View</td>
+
+           <td class="text-primary" *ngIf="data.opr2 == false" (click)="openOption(opt2)" (click)="operator2ButtonClick(data,'Operator2')">Operator-2</td>
+           <td class="text-success" *ngIf="data.opr2 == true" (click)="openOption(opt2)" (click)="viewEtriesByOperators(data,'Operator2')"> <i class="bi bi-eye-fill"></i> View</td>    
+        </tr>
+      </tbody>
+    </table>
+
+
+
+<!--OPR1-->
+<div fxLayoutAlign="center center" fxFlexFill>
+  <ng-template class="modal" #content let-modal >
+    <div class="table table-bordered custom-modal" style="display: flex; flex-direction: column; align-items: center; height: 100%; padding: 0px; margin: 0px; border: none;">
+  <form  #formOpr2="ngForm">
+        <table class="table table-bordered custom-modal"  >
+          <thead style="display: block; width: 100%; background: rgb(16, 24, 82); color: white; ">
+            <tr style="border: none; text-decoration: none;  display: flex; justify-content: space-between;">
+              <td colspan="7" style="background: rgb(16, 24, 82); color: white; border: none;">
+                <h3 style="border: none; text-decoration: none;">  {{subject}} (Max Marks:{{maxmarks}})  (Operator-1) </h3>
+              </td>
+              <td style="border: none; text-decoration: none; cursor: pointer; background-color: rgb(16, 24, 82); ">
+                <button style="background-color: white; color: white;"  type="button" class=" btn btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  
+              </td>  
+            </tr>
+          </thead>
+          <!--For entering Data-->
+          <tbody *ngIf="opr1Fin==false" style="max-height: 70vh; overflow-y: auto; display: block;">
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">ROLL NUMBER</th>
+              <th scope="col"  >STUDENT NAME</th>
+              <th scope="col" style="width: 80px;">Absent</th>
+              <th style="width: 80px;">Marks</th>
+            </tr>
+            <tr *ngFor="let Opr2data of showDetailsForOperator1; let index = index">
+              <td>{{index+1}}</td>
+              <td>{{Opr2data.roll_Number}}</td>
+              <td style="white-space: nowrap;">{{Opr2data.student_name}}</td>
+              <td><input type="checkbox" [(ngModel)]="Opr2data.opr1_status" name="opr1_status{{index}}" [disabled]="showDetailsForOperator1[index].opr1_marks != null && showDetailsForOperator1[index].opr1_marks > 0"></td>
+              <td>
+                <input type="number" (keydown)="preventPlusMinus($event)" style="width: 50px;" [(ngModel)]="Opr2data.opr1_marks" name="opr1_marks{{index}}" [disabled]="showDetailsForOperator1[index].opr1_status==true" [value]="Opr2data.opr1_marks">
+                <div *ngIf="Opr2data.opr1_marks > maxmarks || Opr2data.opr1_marks < 0  || Opr2data.opr1_marks == 0" style="color: red;"> Error: value must be between 0 to {{maxmarks}} </div>
+                  <!-- <div *ngIf="formOpr2.get('opr1_marks{{index}}')?.errors?.['forbiddenCharacters']" style="color: red;">
+                    '+' and '-' characters are not allowed.
+                  </div> -->
+              </td>
+            </tr>
+          </tbody>
+
+           <!--For reading data-->
+           <tbody *ngIf="opr1Fin==true" style="max-height: 70vh; overflow-y: auto; display: block;">
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">ROLL NUMBER</th>
+              <th scope="col"  >STUDENT NAME</th>
+                <th style="width: 80px;"  style="white-space: nowrap;" >Absent / Marks</th>
+            </tr>
+            <tr *ngFor="let Opr2data of showEtriesByOperators; let index = index">
+              <td>{{index+1}}</td>
+              <td>{{Opr2data.roll_Number}}</td>
+              <td style="white-space: nowrap;">{{Opr2data.student_name}}</td>
+              <td style="white-space: nowrap;">
+                <span *ngIf="Opr2data.opr1_status==true"> A </span>
+                <span *ngIf="Opr2data.opr1_status==false"> {{Opr2data.opr1_marks}} </span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot style="display: block;">
+            <tr style="border: none; text-decoration: none;">                                           
+              <td colspan="7" style="border: none; text-decoration: none;">
+                <div style="display: flex; justify-content: flex-end;">
+                  <button *ngIf="opr1Fin==false" type="button" (click)="addMarksByOperator1()" class="btn-group btn btn-primary m-1">Save / Edit Marks</button>
+                  <button *ngIf="opr1Fin==false" type="button" (click)="completeTaskByOperators('Operator1')" class="btn-group btn btn-success m-1">Final Submit</button>
+                  <button *ngIf="opr1Fin==false" type="button" class="btn btn-danger m-1" (click)="modal.close('Save click')">Cancel</button>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>        
+  </form>
+  </div>
+  </ng-template>
+</div> 
+
+
+<!--OPR2-->
+<div fxLayoutAlign="center center" fxFlexFill>
+  <ng-template class="modal" #opt2 let-modal >
+    <div class="table table-bordered custom-modal" style="display: flex; flex-direction: column; align-items: center; height: 100%; padding: 0px; margin: 0px;   border: none;">
+     
+  <form #formOpr1="ngForm">
+        <table class="table table-bordered custom-modal" >
+          <thead style="display: block; width: 100%; background: rgb(16, 24, 82); color: white; ">
+            <tr style="border: none; text-decoration: none;  display: flex; justify-content: space-between;">
+              <td colspan="7" style="background: rgb(16, 24, 82); color: white; border: none;">
+                <h3 style="border: none; text-decoration: none;">  {{subject}} (Max Marks:{{maxmarks}})  (Operator-2)   </h3>
+              </td>
+              <td style="border: none; text-decoration: none; cursor: pointer; background-color: rgb(16, 24, 82); ">
+                <button style="background-color: white; color: white;"  type="button" class=" btn btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  
+              </td>  
+            </tr>
+          </thead>
+          <!--For entering data-->  
+          <tbody  *ngIf="opr2Fin==false" style="max-height: 70vh; overflow-y: auto; display: block;">
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">ROLL NUMBER</th>
+              <th scope="col"  >STUDENT NAME</th>
+              <th scope="col" style="white-space: nowrap;" >Absent</th>
+              <th scope="col" style="white-space: nowrap;" >Marks</th>
+            </tr>
+            <tr *ngFor="let Opr2data of showDetailsForOperator2; let index = index">
+              <td>{{index+1}}</td>
+              <td>{{Opr2data.roll_Number}}</td>
+              <td style="white-space: nowrap;">{{Opr2data.student_name}}</td>
+              <td><input type="checkbox" [(ngModel)]="Opr2data.opr2_status" name="opr2_status{{index}}" [disabled]="showDetailsForOperator2[index].opr2_marks != null && showDetailsForOperator2[index].opr2_marks > 0"></td>
+              <td><input type="number" (keydown)="preventPlusMinus($event)" name="opr2_marks{{index}}" style="width: 50px;" [(ngModel)]="Opr2data.opr2_marks" [disabled]="showDetailsForOperator2[index].opr2_status==true" [value]="Opr2data.opr2_marks">
+                <div *ngIf="Opr2data.opr2_marks > maxmarks ||  Opr2data.opr2_marks < 0  || Opr2data.opr2_marks == 0 " style="color: red;">Error: value must be between 0 to {{maxmarks}}</div>
+               
+            </tr>
+          </tbody>
+
+          <!--For reading data-->
+          <tbody *ngIf="opr2Fin==true" style="max-height:70vh; overflow-y: auto; display: block;">
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">ROLL NUMBER</th>
+              <th scope="col"  >STUDENT NAME</th>
+              <th scope="col" style="white-space: nowrap;" >Absent / Marks</th>
+            </tr>
+            <tr *ngFor="let Opr2data of showEtriesByOperators; let index = index">
+              <td>{{index+1}}</td>
+              <td>{{Opr2data.roll_Number}}</td>
+              <td style="white-space: nowrap;">{{Opr2data.student_name}}</td>
+              <td style="white-space: nowrap;">
+                <span *ngIf="Opr2data.opr2_status==true"> A </span>
+                <span *ngIf="Opr2data.opr2_status==false"> {{Opr2data.opr2_marks}} </span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot style="display: block;">
+            <tr style="border: none; text-decoration: none;">
+              <td colspan="7" style="border: none; text-decoration: none;">
+                <div style="display: flex; justify-content: flex-end;">
+                  <button  *ngIf="opr2Fin==false" type="submit" (click)="addMarksByOperator2()" class="btn-group btn m-1 btn-primary" >Save / Edit Marks</button>
+                  <button  *ngIf="opr2Fin==false"  (click)="completeTaskByOperators('Operator2')"  class="btn-group btn m-1 btn-success" >Final Submit</button>
+                  <button  *ngIf="opr2Fin==false" type="button" class="btn btn-danger m-1" (click)="modal.close('Save click')">Cancel</button>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+  </form>
+  </div>
+  </ng-template>
+</div> 
+
+
+
+
+
+
+<!--Compiler-->
+<div  style="padding: 0; margin: 0; ">
+  <ng-template #content3 let-modal style="padding: 0; margin: 0; border: none !important; ">
+    <div class="table" style="display: flex; flex-direction: column; align-items: center; padding: 0px; margin: 0px;  background-color: rgba(128,128,128);">
+     <form *ngIf="opr1Fin==true && opr2Fin == true">
+      <table class="table table-bordered custom-modal" >
+        <thead style="display: block; width: 100%; background: rgb(16, 24, 82); color: white; ">
+          <tr style="border: none; text-decoration: none; display: flex; justify-content: space-between;">
+            <td colspan="7" style="background: rgb(16, 24, 82); color: white; border: none !important;">
+              <h3 style="border: none; text-decoration: none;">(Compiler) <br> {{subject}} (Max Marks:{{maxmarks}}) </h3>
+            </td>   
+            <td style="border: none; text-decoration: none; cursor: pointer; background-color: rgb(16, 24, 82); ">
+              <button style="background-color: white; color: white;"  type="button" class=" btn btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </td>  
+          </tr>
+        </thead>
+        <!--For Reading Marks-->
+        <tbody *ngIf="showCompilerRecordData.compiled == true && opr1Fin==true && opr2Fin == true" style="max-height: 75vh; overflow-y: auto; display: block;">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col" style="white-space: nowrap;">ROLL NUMBER</th>
+            <th scope="col" style="white-space: nowrap;">STUDENT NAME</th>
+            <th scope="col" style="white-space: nowrap;">OPR 1</th>
+            <th scope="col" style="white-space: nowrap;">OPR 2</th>
+            <th scope="col" style="white-space: nowrap;">Abset / Marks</th>
+            <th scope="col" style="white-space: nowrap;">Remarks</th>
+
+          </tr>
+          <tr *ngFor="let compData of showCompilerRecordData.entryRes; let index = index">
+            <td>{{index+1}}</td>
+            <td>{{compData.roll_Number}}</td>
+            <td style="white-space: nowrap;">{{compData.student_name}}</td>
+
+            <td *ngIf="compData.opr1_status==false">{{compData.opr1_marks}}</td>
+            <td *ngIf="compData.opr1_status==true">A</td>
+
+            <td *ngIf="compData.opr2_status==false">{{compData.opr2_marks}}</td>
+            <td *ngIf="compData.opr2_status==true">A</td>
+
+            <td *ngIf="compData.compilerAttendance==false">{{compData.compiler_Marks}}</td>
+            <td *ngIf="compData.compilerAttendance==true">A</td>
+            <td style="white-space: nowrap;">{{compData.remarks}}</td>
+
+          </tr>
+          <tr>              
+        </tbody>
+        <!--For Entering Marks-->
+        <tbody *ngIf="showCompilerRecordData.compiled == false && opr1Fin==true && opr2Fin == true" style="max-height: 63vh; overflow-y: auto; display: block;">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col" style="white-space: nowrap;">ROLL NUMBER</th>
+            <th scope="col" style="white-space: nowrap;">STUDENT NAME</th>
+            <th scope="col" style="white-space: nowrap;">OPR 1</th>
+            <th scope="col" style="white-space: nowrap;">OPR 2</th>
+            <th scope="col" >Absent</th>
+            <th scope="col" style="white-space: nowrap;" >Marks</th>
+            <th scope="col" style="white-space: nowrap;" >Remarks</th>
+          </tr>
+          <tr *ngFor="let compData of showCompilerRecordData.entryRes; let index = index">
+            <td>{{index+1}}</td>
+            <td>{{compData.roll_Number}}</td>
+            <td style="white-space: nowrap;">{{compData.student_name}}</td>
+            
+            <td *ngIf="compData.opr1_status==false">{{compData.opr1_marks}}</td>
+            <td *ngIf="compData.opr1_status==true">A</td>
+  
+            <td *ngIf="compData.opr2_status==false">{{compData.opr2_marks}}</td>
+            <td *ngIf="compData.opr2_status==true">A</td>
+
+            <td><input type="checkbox" [(ngModel)]="compData.compilerAttendance" name="compilerAttendance{{index}}" [disabled]="showCompilerRecordData.entryRes[index].compiler_Marks != null && showCompilerRecordData.entryRes[index].compiler_Marks > 0"></td>
+            <td><input type="number" (keydown)="preventPlusMinus($event)" style="width: 100px;" [(ngModel)]="compData.compiler_Marks" name="compiler_Marks{{index}}"  [disabled]="showCompilerRecordData.entryRes[index].compilerAttendance==true">
+              <div *ngIf="compData.compiler_Marks > maxmarks || compData.compiler_Marks <0 || compData.compiler_Marks == 0" style="color: red;">Error: value must be between 1 to {{maxmarks}}</div>
+                
+              </td>
+            <td><input type="text" [(ngModel)]="compData.remarks" name="remarks{{index}}" style="white-space: nowrap; width: 300px;" [value]="compData.remarks"></td>
+          </tr>
+        </tbody> 
+        <tbody *ngIf="showCompilerRecordData.compiled == false && opr1Fin==true && opr2Fin == true && showCompilerRecordData.entryRes.length == 0 ">
+                  <h3 style="text-align: center;" class="text-danger">All entry is filled please click "Final Submit" button.</h3>
+        </tbody>      
+        <tfoot style="display: block;">
+          <tr style="border: none; text-decoration: none;">
+            <td colspan="7" style="border: none; text-decoration: none;">
+              <div style="display: flex; justify-content: flex-end;">
+                <button *ngIf="showCompilerRecordData.compiled == false && opr1Fin==true && opr2Fin == true && showCompilerRecordData.entryRes.length != 0" (click)="modal.close('Save click')"   (click)="addMarksByCompiler()" class="btn-group btn m-1 btn-primary">Save Marks</button> 
+               <button *ngIf="showCompilerRecordData.compiled == false && opr1Fin==true && opr2Fin == true && showCompilerRecordData.entryRes.length == 0 " (click)="modal.close('Save click')" (click)="completeTaskByCompiler()" class="btn-group btn m-1 btn-success">Final Submit</button>
+               <button  *ngIf="showCompilerRecordData.compiled == false && opr1Fin==true && opr2Fin == true" class="btn-group btn m-1 btn-danger" (click)="modal.close('Save click')">Cancel</button> 
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </form>
+
+    <!--For Showing Error Message-->
+       <div *ngIf="opr1Fin==false || opr2Fin == false" class="table table-bordered alert alert-danger">
+            <div colspan="7" style="border: none; text-align: center;" class="alert alert-danger">
+               Operator-1 / Operator-2 enteries are not submitted.
+            </div>
+      </div> 
+
+    </div>
+  </ng-template>
+</div>

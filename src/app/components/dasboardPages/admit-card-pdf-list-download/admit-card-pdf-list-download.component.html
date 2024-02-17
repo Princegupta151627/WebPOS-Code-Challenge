@@ -1,0 +1,51 @@
+<div   class="container-fluid ">
+
+    <div style="display: flex; justify-content: flex-start;">
+      <form [formGroup]="form">
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Academic Term</mat-label>
+          <mat-select formControlName="acedTerm" required (selectionChange)="getAllinstitute()">
+            <mat-option *ngFor="let acc of academicTermData" [value]="acc">{{acc}}</mat-option>
+          </mat-select>
+      <mat-error>Academic Term is required*</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Term</mat-label>
+            <mat-select formControlName="Term" required (selectionChange)="getAllinstitute()">       
+              <mat-option [value]="1">1</mat-option>
+              <mat-option [value]="2">2</mat-option>
+              <mat-option [value]="3">3</mat-option>    
+              <mat-option [value]="4">4</mat-option>           
+              <mat-option [value]="5">5</mat-option>           
+              <mat-option [value]="6">6</mat-option>           
+             </mat-select>
+        <mat-error>Term is required</mat-error>
+          </mat-form-field>
+
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Center</mat-label>
+            <mat-select formControlName="center" required (selectionChange)="getAllinstitute()">
+              <mat-option *ngFor="let data of centerList" [value]="data.id">{{data.name}}</mat-option>       
+            </mat-select>
+           <mat-error>Center name is required*</mat-error>
+        </mat-form-field>
+    
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Institute</mat-label>
+            <mat-select formControlName="institute" required>
+              <mat-option *ngFor="let data of instituteList" [value]="data.id">{{data.name}}</mat-option>       
+          </mat-select>
+           <mat-error>institute name is required*</mat-error>
+        </mat-form-field>
+
+        <button class="btn btn-primary active m-1" [disabled]="!form.valid" (click)="downloadAdmitCardList()"> Download AdmitCard List</button>
+      </form>
+    </div>
+
+    </div>
+  
+ 

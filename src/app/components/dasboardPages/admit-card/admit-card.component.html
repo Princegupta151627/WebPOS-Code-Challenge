@@ -1,0 +1,70 @@
+<div class="container-fluid ">
+    <div class="page_box p-3 mt-2" style="color: aliceblue;">
+      <span mat-raised-button class="btn btn-lg mt-1 p-2" style="color: white;" ></span>        
+
+      Admit Card</div>
+    <div class="page_content shadow p-3 position-relative">
+        <div class="page_content-data position-absolute">
+            </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+          
+          <th scope="col">Academic Term</th>
+          <th scope="col">Roll Number</th>
+          <th scope="col">Student Name</th>
+          <th scope="col">Form Status</th>
+          <th scope="col">Verified Status By Institute</th>
+          <th scope="col">Download</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+           <th scope="row">{{admitCardDetails.academicTerm}}</th>
+         
+          <td>{{admitCardDetails.rollnumber}}</td>
+           <td>{{studentName}}</td>
+
+          <td>  
+            <span *ngIf="admitCardDetails.formStatus == true" class="text-primary"> Form Filled <i class="bi bi-check2-circle text-primary"></i> </span>
+            <span *ngIf="admitCardDetails.formStatus == false" class="text-danger"> Form Not Filled <i class="bi bi-x-circle-fill text-danger"></i></span>
+          </td>
+
+          <td>
+            <span *ngIf="admitCardDetails.formVerifiedByInst == true" class="text-primary"> Verified <i class="bi bi-check2-circle text-primary"></i> </span>
+            <span *ngIf="admitCardDetails.formVerifiedByInst == false" class="text-danger"> Not Verified <i class="bi bi-x-circle-fill text-danger"></i> </span>
+          </td>
+
+          <td>
+            <mat-icon color="primary">
+            <span *ngIf="admitCardDetails.formVerifiedByInst == true && admitCardDetails.formStatus == true && admitCardDetails.feePaid == true">
+              <button type="button" class="btn btn-success" (click)="downloadingAdmitCard()">download</button>
+            </span>
+            </mat-icon>
+           </td>
+        </tr>
+       
+        </tbody>
+        
+      </table>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

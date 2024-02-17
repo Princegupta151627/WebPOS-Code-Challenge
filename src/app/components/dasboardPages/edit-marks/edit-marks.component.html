@@ -1,0 +1,162 @@
+<div class="container-fluid">
+  <div class="page_box p-3 mt-2" style="color: aliceblue">Edit Marks</div>
+  <div class="page_content shadow p-3 position-relative">
+    <div class="page_content-data position-absolute"></div>
+    <form [formGroup]="form">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Enter Roll Number</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Enter Roll Number"
+          required
+          formControlName="roll"
+        />
+        <mat-error>Roll Number is required</mat-error>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        class="btn ms-3"
+        (click)="getinternalEditingMarks()"
+        style="
+          background: linear-gradient(to right, rgb(16, 24, 82), #797e86);
+          color: white;
+        "
+      >
+        Get Marks Details
+      </button>
+    </form>
+
+    <h2>Student Name: {{ studentName }}</h2>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Type</th>
+          <th scope="col">Max Marks</th>
+          <th scope="col">OPR 1</th>
+          <th scope="col">OPR 2</th>
+          <th scope="col">Marks</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of getEditMarksList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ data.subject }}</td>
+          <td>{{ data.type }}</td>
+          <td>{{ data.maxMarks }}</td>
+
+          <td *ngIf="data.opr1_marks != null">{{ data.opr1_marks }}</td>
+          <td *ngIf="data.opr1_marks == null">A</td>
+
+          <td *ngIf="data.opr2_marks != null">{{ data.opr2_marks }}</td>
+          <td *ngIf="data.opr2_marks == null">A</td>
+
+          <td *ngIf="data.compiler_Marks != null">{{ data.compiler_Marks }}</td>
+          <td *ngIf="data.compiler_Marks == null">A</td>
+
+          <td>
+            <mat-icon
+              color="primary"
+              (click)="open(content)"
+              (click)="OnEdit(data)"
+              >edit</mat-icon
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div fxLayoutAlign="center center" fxFlexFill>
+      <ng-template
+        class="modal"
+        #content
+        let-modal
+        style="background-color: rgba(196, 200, 167, 0.5)"
+      >
+        <div class="modal-header" style="padding: 0px">
+          <mat-toolbar
+            class="btn"
+            style="
+              background: linear-gradient(to right, rgb(16, 24, 82), #797e86);
+              color: white;
+            "
+          >
+            <h2 class="modal-title" id="modal-basic-title">Modify Marks</h2>
+            <button
+              type="button"
+              class="btn btn-close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            ></button>
+          </mat-toolbar>
+        </div>
+        <div
+          class="modal-body"
+          style="background-color: rgba(48, 102, 169, 0.171)"
+        >
+          <mat-card fxFlex="100">
+            <form fxLayoutAlign="stretch" fxLayout="column" [formGroup]="form2">
+              <mat-form-field appearance="fill" class="full-width mt-3">
+                <mat-label>Marks Obtained</mat-label>
+                <input
+                  type="number"
+                  matInput
+                  placeholder="Enter Mark"
+                  required
+                  formControlName="editedMarks"
+                  type="number"
+                />
+                <mat-error>Marks is required</mat-error>
+                <div
+                  *ngIf="
+                    form2.get('editedMarks').value > maxmarks ||
+                    form2.get('editedMarks').value < 0 ||
+                    form2.get('editedMarks').value == 0
+                  "
+                  style="color: red"
+                >
+                  Error: value must be between 0 to {{ maxmarks }}
+                </div>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Remarks</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Remark"
+                  formControlName="removeRemarks"
+                  required
+                  type="text"
+                />
+              </mat-form-field>
+            </form>
+          </mat-card>
+        </div>
+        <div class="modal-footer">
+          <button
+            [disabled]="!form.valid"
+            (click)="EditInternalMarks()"
+            (click)="modal.close('Save click')"
+            class="btn-group btn"
+            style="
+              background: linear-gradient(to right, rgb(16, 24, 82), #797e86);
+              color: white;
+            "
+          >
+            Update
+          </button>
+          <button
+            type="submit"
+            class="btn btn-danger"
+            (click)="modal.close('Save click')"
+          >
+            Cancel
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

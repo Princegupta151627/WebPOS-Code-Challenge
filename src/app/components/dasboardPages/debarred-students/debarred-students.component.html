@@ -1,0 +1,154 @@
+
+<div class="container-fluid ">
+    <div class="page_box p-3 mt-2" style="color: aliceblue;">
+
+        Debarred Students</div>
+    <div class="page_content shadow p-3 position-relative">
+        <div class="page_content-data position-absolute">
+  </div>
+
+  <button mat-raised-button class="btn m-1 p-2" style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;" (click)="open(content)"><mat-icon>add_circle_outline</mat-icon> Add Debarred Student</button>
+  
+  <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col"> Academic Term</th>
+        <th scope="col"> Registration Number</th>
+        <th scope="col"> Term</th>
+        <th scope="col"> Student Name</th> 
+        <th scope="col"> Due To</th>
+        <th scope="col">Remove</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr  *ngFor="let data of debarredStudentDetails">
+        <td>{{ data.academicTerm }}</td>
+        <td>{{ data.regNo }}</td>
+        <td>{{ data.term }}</td>
+        <td>{{ data.studentName }}</td>
+        <td>{{ data.dueTo }}</td>     
+         <td>
+          <mat-icon color="warn" (click)="open1(content1)" (click)="onRemove( data )">delete</mat-icon>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div fxLayoutAlign="center center" fxFlexFill>
+      <ng-template class="modal" #content let-modal style="background-color: rgba(196, 200, 167, 0.5);">
+        
+        <div class="modal-header" style="padding: 0px;">
+          <mat-toolbar class="btn" style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">
+          <h2 class="modal-title" id="modal-basic-title">Add Debarred Student</h2>
+          <button  type="button" class=" btn btn-close " (click)="resetform()" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </mat-toolbar>
+        </div>
+        <div class="modal-body" style="background-color: rgba(48, 102, 169, 0.171);" >
+          <mat-card fxFlex="100" >
+          
+        
+            <form fxLayoutAlign="stretch" fxLayout="column" [formGroup]="form" >
+            <div appearance="fill" class="full-width mt-3">
+              <div style="margin-right:3%; color:#6b6b6b;">
+                <mat-label>Academic Term * </mat-label>
+            </div>
+              <select style="width: 100%; height: 30px;" required formControlName="acedTerm" >
+                <option *ngFor="let acc of academicTermData" [value]="acc">{{acc}}</option>
+              </select>
+            </div>
+              <mat-form-field appearance="fill"  class="full-width mt-3">
+                <mat-label>Registration Number</mat-label>
+                <input type="number" matInput placeholder="Enter Registration Number" required formControlName="regNo" (input)="getStudentNameByRegNo(form.value.regNo)">
+                <div *ngIf="form.value.regNo < 0 || form.value.regNo == 0" style="color: red;">Error: enter valid registration no.</div>
+                <mat-error>Registration Number is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill"  class="full-width">
+                <mat-label>Student Name</mat-label>
+                <input matInput formControlName="name" value="{{studentNameByReg}}" readonly>
+            </mat-form-field>
+             
+           
+            <div appearance="fill" class="full-width">
+                <div style="margin-right:3%; color:#6b6b6b;">
+                  <mat-label>Term *</mat-label>
+              </div>
+                <select style="width: 100%; height: 30px;" required formControlName="term" >
+                    <option [value]="1">1</option>
+                    <option [value]="2">2</option>
+                    <option [value]="3">3</option>
+                    <option [value]="4">4</option>
+                    <option [value]="5">5</option>
+                    <option [value]="6">6</option>
+                </select>
+              </div>
+              
+
+              <div appearance="fill" class="full-width mt-3">
+                <div style="margin-right:3%; color:#6b6b6b;">
+                  <mat-label>Due To *</mat-label>
+              </div>
+                <select style="width: 100%; height: 30px;" required formControlName="dueTo">
+                  <option >Attendence Default </option>
+                  <option>Fee Default </option>
+                  <option>DAC Commitee Report </option>
+                  <option>If any other</option>
+                </select>
+
+              </div>
+              <mat-form-field *ngIf="form.get('dueTo').value === 'If any other'" appearance="fill" class="full-width">
+                <mat-label>Specify</mat-label>
+                <input matInput placeholder="Specify" formControlName="otherDueTo">
+                <mat-error *ngIf="form.get('otherDueTo').invalid">Specify is required</mat-error>
+              </mat-form-field>
+        </form>
+      </mat-card>
+        </div>
+        <div class="modal-footer">  
+          <!-- <button (click)="saveDebarredStudent(form)" [disabled]="!form.valid"  (click)="modal.close('Save click')"  class=" btn-group btn "  style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">Add</button> -->
+          <button (click)="saveDebarredStudent(form)" [disabled]="!form.valid"  (click)="modal.close('Save click')"  class=" btn-group btn btn-success">Add Student</button>
+          <button type="submit" (click)="resetform()" class="btn btn-danger" (click)="modal.close('Save click')">Cancel</button>
+        </div>
+      </ng-template>
+      </div> 
+    
+        
+      <div fxLayoutAlign="center center" fxFlexFill>
+        <ng-template class="modal" #content1 #regNo let-modal style="background-color: rgba(196, 200, 167, 0.5);">
+          
+          <div class="modal-header" style="padding: 0px;">
+            <mat-toolbar class="btn" style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">
+            <h2 class="modal-title" id="modal-basic-title">Remove Debarred Student</h2>
+            <button  type="button" class=" btn btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+          </mat-toolbar>
+          </div>
+
+          <div class="modal-body" style="background-color: rgba(48, 102, 169, 0.171);" >
+            <mat-card fxFlex="100" >
+            
+         <form fxLayoutAlign="stretch" fxLayout="column" [formGroup]="form2" >
+             
+              <div appearance="fill" class="full-width mt-3">
+                <div style="margin-right:3%; color:#6b6b6b;">
+                  <mat-label> Do you really want to delete this record </mat-label>
+                 </div>
+              </div>
+
+              <mat-form-field appearance="fill"  class="full-width">
+                <mat-label>Remarks</mat-label>
+                <input matInput placeholder="Enter Remarks" required formControlName="removeRemarks" >
+                <mat-error>Remarks is required*</mat-error>
+            </mat-form-field>
+
+          </form>
+
+        </mat-card>
+          </div>
+          <div class="modal-footer">  
+            <!-- <button (click)="removeDebarredStudent(form2)" [disabled]="!form2.valid" (click)="modal.close('Save click')"  class=" btn-group btn " style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">Remove</button> -->
+            <button (click)="removeDebarredStudent(form2)" [disabled]="!form2.valid" (click)="modal.close('Save click')"  class=" btn-group btn btn-success">Remove</button>
+            <button type="submit" class="btn btn-danger"  (click)="modal.close('Save click')">Cancel</button>
+          </div>
+        </ng-template>
+        </div> 
+  </div>
+</div>

@@ -1,0 +1,55 @@
+.container-fluid{
+    height: 300px;
+}
+.page {
+    color: white;
+    padding: 0 1rem;
+    background: #f1f5f9;
+    width: 1050px;
+}
+.page_box{
+    min-height: 50px;
+    background: linear-gradient(to right, rgb(16, 24, 82), #797e86);
+    margin: 0 -1rem;
+    font-size: 20px;
+}
+.page_box_content {
+    min-height: calc(100vh - 170px);
+    border-radius: 10px;
+    margin-top: -2rem;
+    background: white;
+    color: black;
+    font-size: 1.5rem;
+}
+.page_box_content_data{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+mat-form-field{
+    margin: 20px;
+    width: 300px;
+}
+li{
+    list-style: none;
+}
+    /* .full-width {
+        width: 100%; 
+      } */
+
+
+      .custom-radio-icon {
+        /* Style your custom icon or selected state here */
+        /* Example: change background color or add a check icon */
+        background-color: green;
+        color: white;
+        padding: 2px; /* Just an example */
+    }
+    
+    /* Hide the default radio circle */
+    .mat-radio-outer-circle, .mat-radio-inner-circle {
+        display: none;
+    }
+    
+  
+  

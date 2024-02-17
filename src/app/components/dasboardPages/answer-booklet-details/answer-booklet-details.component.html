@@ -1,0 +1,48 @@
+<div class="container-fluid ">
+    <div class="page_box p-3 mt-2" style="color: aliceblue;">
+Answer Booklet Details    </div>
+    <div class="page_content shadow p-3 position-relative">
+      <div class="page_content-data position-absolute">
+      </div>
+      <form [formGroup]="form">
+       
+         <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Academic Term</mat-label>
+          <mat-select formControlName="acedTerm" required>
+            <mat-option *ngFor="let acc of academicTermData" [value]="acc">{{acc}}</mat-option>
+          </mat-select>
+        <mat-error>Academic Term is required*</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width"  >
+            <mat-label>Exam Date</mat-label>
+    
+            <input  matInput [matDatepicker]="picker" placeholder="Exam Date"  formControlName="examDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Shift</mat-label>
+          <mat-select formControlName="shift" required>       
+            <mat-option [value]="1">1</mat-option>
+            <mat-option [value]="2">2</mat-option>
+                    
+           </mat-select>
+         <mat-error>Shift is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill"  class="full-width" style="width: 12vw;">
+            <mat-label>Speed Post Tracking No. (Please update after dispatch)</mat-label>
+            <input matInput inputmode="tel" placeholder="Enter Tracking Number" formControlName="num" #nameInput>
+            
+        </mat-form-field>
+  
+       
+  
+        
+  
+        <button mat-raised-button class="btn viewbtn" > Generate Answer Booklet Detail </button>
+        <button mat-raised-button class="btn btn-success m-1" > Download Answer Booklet Detail  </button>
+
+  
+      </form>
+  </div>
+  </div>

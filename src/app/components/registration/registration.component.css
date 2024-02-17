@@ -1,0 +1,23 @@
+mat-form-field{
+    width: 25vw;
+}
+mat-icon{
+
+    color:  rgba(18, 29, 107, 0.849);
+}
+.custom-btn {
+    background: rgb(51, 22, 116);
+    color: white;
+ }
+ 
+ .custom-btn:disabled {
+    background: rgb(111, 111, 111); /* Change the background color for the disabled state */
+    color: white; /* Change the text color for the disabled state */
+ }
+ .error{
+    color: red;
+ }
+ label{
+    font-weight: 500;
+    font-size: medium;
+ }

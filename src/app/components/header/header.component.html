@@ -1,0 +1,31 @@
+<mat-toolbar>
+    <mat-toolbar-row class="justify-content-between">
+        <button mat-icon-button (click)="toggleSidebar()">
+            <mat-icon style="color: white;" class="mt-3">menu</mat-icon>
+        </button>
+        <div>
+            <p style="color: white;" class="date">{{currentDate}}</p>
+
+        </div>
+        <div>
+            <ul>
+                <li >
+                    <button
+                    mat-button
+                    [matMenuTriggerFor]= "menu" 
+                    class="user mt-4 d-flex align-items-center" style="color: white;">
+               Welcome, {{userName}}
+                <mat-icon class="user-image-icon ml-1">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #menu= "matMenu">
+                    <button mat-menu-item (click)="home()">
+                        <mat-icon>exit_to_app</mat-icon>
+                        Logout
+                    </button>
+                </mat-menu>
+
+                </li>
+            </ul>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

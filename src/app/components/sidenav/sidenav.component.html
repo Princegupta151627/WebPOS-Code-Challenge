@@ -1,0 +1,170 @@
+<mat-nav-list>
+    <div class="logo py-4">
+        <img src="../../../assets/sbte1.png" alt="Company logo"> 
+        <h5 class="text-white"> State Board Of Technical Education </h5>
+    </div>
+    <mat-divider></mat-divider>
+
+<!-- 
+
+    <div  *ngIf="roles === 'student'">
+    <a mat-list-item  (click)="studentRegistarion()" roterLinkActive="list-item-active" >
+        <mat-icon>dashboard</mat-icon> Student Registration
+    </a>
+    <a mat-list-item  (click)="semesterEnrollmentNew()">
+        <mat-icon>fact_check</mat-icon> Semester Enrollment New
+    </a>
+    <a mat-list-item >
+        <mat-icon>assignment</mat-icon> Revaluation Form
+    </a>
+    <a mat-list-item (click)="examForm()">
+        <mat-icon>edit_note</mat-icon> Examination Form
+    </a>
+   
+    <a mat-list-item (click)="result()" >
+        <mat-icon>description</mat-icon> Terminal Marks
+    </a>
+    <a mat-list-item (click)="admitCard()">
+        <mat-icon>description</mat-icon> Admit Card
+    </a>
+   </div>
+   -->
+  
+
+<!-- 
+<div *ngIf="roles === 'admin'">
+    <a mat-list-item (click)="marksEntry()">
+        <mat-icon>book</mat-icon> Marks Entry
+    </a>
+    <a mat-list-item (click)="examiners()">
+        <mat-icon>group</mat-icon> Examiners
+    </a>
+    <a mat-list-item (click)="externalInstitute()">
+        <mat-icon>apartment</mat-icon> External Institute
+    </a>
+    <a mat-list-item (click)="examSchedularInstitute()">
+        <mat-icon>apartment</mat-icon> Exam Schedular Institute
+    </a>
+    <a mat-list-item (click)="electivePaper()">
+        <mat-icon>book</mat-icon> Elective Paper
+    </a>
+    <a mat-list-item (click)="debarredStudent()">
+        <mat-icon>group</mat-icon> Debarred Students
+    </a>
+</div> -->
+
+
+
+
+
+<!-- 
+<div *ngIf="roles === 'institute'">
+    <a mat-list-item (click)="marksEntry()">
+        <mat-icon>book</mat-icon> Marks Entry
+    </a>
+    <a mat-list-item (click)="examiners()">
+        <mat-icon>group</mat-icon> Examiners
+    </a>
+    <a mat-list-item (click)="externalInstitute()">
+        <mat-icon>apartment</mat-icon> External Institute
+    </a>
+    <a mat-list-item (click)="examSchedularInstitute()">
+        <mat-icon>apartment</mat-icon> Exam Schedular Institute
+    </a>
+    <a mat-list-item (click)="electivePaper()">
+        <mat-icon>book</mat-icon> Elective Paper
+    </a>
+    <a mat-list-item (click)="debarredStudent()">
+        <mat-icon>group</mat-icon> Debarred Students
+    </a>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div *ngIf="roles === 'institute'">  <!--3 institute-->
+    <a mat-list-item (click)="marksEntry()"  [ngClass]="{ 'selected': selectedNavItem === 'marksEntry' }">
+        <!-- <mat-icon>upcoming</mat-icon> Marks Entry -->
+        <mat-icon> border_color</mat-icon> Marks Entry
+    </a>
+    <a mat-list-item (click)="examinationFormVerification()" [ngClass]="{ 'selected': selectedNavItem === 'examinationFormVerification' }">
+        <mat-icon>fact_check</mat-icon> Examination Form Verification
+    </a>
+    <a mat-list-item (click)="admitCardListInstitute()" [ngClass]="{ 'selected': selectedNavItem === 'admitCardListInstitute' }">
+        <mat-icon>downloading</mat-icon> Admit Card List Download
+    </a>
+    <a mat-list-item (click)="debarredStudent()" [ngClass]="{ 'selected': selectedNavItem === 'debarredStudent' }">
+        <mat-icon>group</mat-icon> Debarred Students
+    </a>
+    <a mat-list-item (click)="editMarks()" [ngClass]="{ 'selected': selectedNavItem === 'editMarks' }">
+        <mat-icon>edit</mat-icon> Edit Marks
+    </a>
+    <a mat-list-item (click)="electivePaper()" [ngClass]="{ 'selected': selectedNavItem === 'electivePaper' }">
+        <mat-icon>view_list</mat-icon> Select Elective Paper
+    </a>
+    <a mat-list-item (click)="tabularReport()" [ngClass]="{ 'selected': selectedNavItem === 'tabularReport' }">
+        <mat-icon>table</mat-icon> Tabular Report
+    </a>
+
+    
+    <!--NOT COMP-->
+    <a mat-list-item (click)="absenteeUpdate()" [ngClass]="{ 'selected': selectedNavItem === 'absenteeUpdate' }">
+        <mat-icon>edit</mat-icon> Absentee Update
+    </a>
+    <a mat-list-item (click)="answerBookletDetails()" [ngClass]="{ 'selected': selectedNavItem === 'answerBookletDetails' }">
+        <mat-icon>table</mat-icon> Answer Booklet Details
+    </a>
+    <a mat-list-item (click)="examShedularInst()" [ngClass]="{ 'selected': selectedNavItem === 'examSchedularInstitute' }">
+        <mat-icon>event_available</mat-icon> Exam Scheduler
+    </a>
+    <a mat-list-item (click)="examiner()" [ngClass]="{ 'selected': selectedNavItem === 'examiners' }">
+        <mat-icon> local_library</mat-icon> Examiner
+    </a>
+    <a mat-list-item (click)="externalInst()" [ngClass]="{ 'selected': selectedNavItem === 'externalInstitute' }">
+        <mat-icon>location_city</mat-icon> External Institute
+    </a>
+
+</div>
+
+
+
+<div *ngIf="roles === 'admin'"> <!--1 admin-->
+    <a mat-list-item (click)="admitCardListDownloadAdmin()" [ngClass]="{ 'selected': selectedNavItem === 'admitCardListDownloadAdmin' }">
+        <mat-icon>book</mat-icon> Examination Form Verification
+    </a>
+</div>
+
+
+
+
+
+<div  *ngIf="roles === 'student'"> <!--2 student-->
+    <a mat-list-item (click)="examForm()">
+        <mat-icon>edit_note</mat-icon> Examination Form
+    </a>
+   
+    <a mat-list-item (click)="result()" >
+        <mat-icon>description</mat-icon> Terminal Marks
+    </a>
+
+    <a mat-list-item (click)="admitCard()">
+        <mat-icon>description</mat-icon> Admit Card
+    </a>
+</div>
+
+
+
+</mat-nav-list>
+ 

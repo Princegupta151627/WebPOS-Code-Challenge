@@ -1,0 +1,15 @@
+
+.form-signin 
+{
+    width: 500px;
+    margin: 0 auto;
+    
+ }
+ mat-form-field{
+   width: 500px;
+ 
+  }
+ .f1
+ {
+    display: flex;
+ }

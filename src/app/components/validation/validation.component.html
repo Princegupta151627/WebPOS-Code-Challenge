@@ -1,0 +1,37 @@
+
+
+<div class="container-fluid" >  
+    <header>
+       <img src="../../../assets/sbtebanner.png" width="100%" style="margin-top: 8px; display: flex; justify-content: center;">
+   </header>  
+   <div >
+     <form [formGroup]="formData"   class="form-signin">
+    
+ <div style="text-align:center;">
+     <h1 style="color: rgb(51, 22, 116);">                
+        
+     </h1>
+     <div> <img src="../../../assets/sbte.png" height="80" width="80"></div>
+     <h2 style="color: rgb(51, 22, 116);">Validation Form</h2>
+     </div>
+     <dt for="inputEmail" class="m-1" style="color: rgb(51, 22, 116);"> SBTE Registration No. / BCECE Roll Number </dt>
+    <dd> <input type="text" id="Email" class="form-control" 
+         formControlName="bceceId" placeholder="Enter your Registration / Roll Number" required autofocus>
+     </dd>
+     <dt for="inputPassword" class="m-1" style="color: rgb(51, 22, 116);">Date Of Birth (DOB)</dt>
+    <dd> <input type="date" id="inputPassword" class="form-control" 
+         formControlName="dob"  required></dd>
+         <div class="d-grid">
+         <button [disabled]="loading" [disabled]="!formData.valid" class="btn " style="background: rgb(91, 68, 139); color: white;" (click)="onClickSubmit()">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Validate
+      </button>
+      </div>
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+     </form>
+     </div>
+ </div>
+            
+              
+           
+        

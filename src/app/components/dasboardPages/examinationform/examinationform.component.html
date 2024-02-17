@@ -1,0 +1,141 @@
+<div  class="container-fluid " >
+
+    <div style="display: flex; justify-content: flex-start;">
+      <form [formGroup]="form">
+  
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Academic Term</mat-label>
+          <mat-select formControlName="acedTerm">
+           
+            <mat-option *ngFor="let acc of readData" [value]="acc">{{acc}}</mat-option>
+      </mat-select>
+      <mat-error>Academic Term is required*</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Program Term</mat-label>
+          <mat-select formControlName="progTerm">
+           
+            <mat-option [value]="1">1</mat-option>
+            <mat-option [value]="2">2</mat-option>
+            <mat-option [value]="3">3</mat-option>
+            <mat-option [value]="4">4</mat-option>
+            <mat-option [value]="5">5</mat-option>
+            <mat-option [value]="6">6</mat-option>
+      </mat-select>
+      <mat-error>Program Term is required*</mat-error>
+        </mat-form-field>
+        <button class="btn btn-primary active m-1" (click)="searchDetails()" [disabled]="!form.valid"> Search</button>
+      </form> 
+
+    </div>
+  
+    <div *ngIf="noResponseError">
+     <div>
+       <h2  style="display: flex;   justify-content: center; font-weight: bold;">EXAMINATION FORM </h2>
+     </div>
+  <div style="display: flex; justify-content: space-around;"> 
+    <div style="display: flex; justify-content: space-around;">
+      <ol ><b>
+        <li>institute name</li>
+        <li>Branch Name</li>
+        <li>Registration Number</li>
+        <li>Name</li>
+         <li>Date of Birth</li>
+        <li>Father's Name</li> 
+        <li>Roll number</li> 
+
+        <li>Examination Fees</li> 
+        <li>Gender</li> 
+        <li>Cast-Category</li> 
+
+      </b> 
+        <li class="text-primary">Paid Amount</li> 
+        <li class="text-primary">Paid Date</li> 
+        <li class="text-primary">Paid Status</li> 
+        <li class="text-primary">Transaction Number</li> 
+      </ol>
+
+      <ol>
+        <li>: {{readData2.instituteName}}</li>
+        <li>: {{readData2.branchNmae}}</li>
+        <li>: {{readData2.registrationNumber}}</li>
+        <li>: {{readData2.studentName}}</li>
+        <li>: {{readData2.dob}}</li>
+        <li>: {{readData2.fatherName}}</li> 
+        <li>: {{readData2.rollNumber}}</li>
+
+        <li>: {{readData2.examFee}}</li>
+        <li>: {{readData2.gender}}</li>
+        <li>: {{readData2.castCategory}}</li>
+
+
+
+        <li class="text-primary">: <span *ngIf="readData2.paidAmount != 0">{{readData2.paidAmount}}</span></li>
+        <li class="text-primary">: {{readData2.paidDate}}</li>
+        <li>: <span class="text-danger" *ngIf="readData2.paymentStatus == 'Payment Pending'">{{readData2.paymentStatus}}</span> <span class="text-success" *ngIf="readData2.paymentStatus == 'Paid Successfully'">{{readData2.paymentStatus}}</span></li>
+
+        <li class="text-primary">: {{readData2.transactionNo}}</li>
+
+      </ol>
+    </div>
+
+    <div>
+
+      <table class="table table-bordered" >
+        <thead>
+          <tr>
+            <th colspan="3"><h2 class="text-center"><b>Subject Details</b></h2></th>
+          </tr>
+          <tr>
+            <th scope="col">TYPE</th>
+            <th scope="col">CODE</th>
+            <th scope="col">NAME</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let us of readData2.registrationCourseRes">
+            <td scope="row">{{us.type}}</td>
+            <td scope="row">{{us.code}}</td>
+            <td  scope="row">{{us.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    </div>
+    <div *ngIf="readData2.payFeesButtonVisibility == true && readData2.submitFormButtonVisibility == false && readData2.examinationFormSubmitted == false && ResponseError == false">
+      <button type="button" class="btn btn-success"><i class="bi bi-currency-rupee"></i>Pay Examination Fees</button>
+    </div>
+      <div *ngIf="readData2.submitFormButtonVisibility == true && readData2.payFeesButtonVisibility == false && readData2.examinationFormSubmitted == false && ResponseError == false">
+      <button type="button" class="btn btn-success" (click)="examinationFornSubmit()">Click To Submit Examination Form</button>
+  </div>
+
+    <div *ngIf="readData2.payFeesButtonVisibility == false && readData2.submitFormButtonVisibility == true && readData2.examinationFormSubmitted == true && ResponseError == false" >
+        <button type="button" class="btn btn-success" (click)="generateExaminationFormPDF()"><i class="bi bi-download"></i> Download Examination Form </button>
+    </div>
+
+    <div *ngIf="readData2.payFeesButtonVisibility == false && readData2.submitFormButtonVisibility == false && readData2.examinationFormSubmitted == false && ResponseError == false">
+      <h1 class="text-danger text-center"><b><u>You can not fill your examination Form !! Please contact your institute </u></b></h1>
+  </div >
+
+  </div>
+
+
+<div *ngIf="ResponseError==true" class="container-fluid" id="errorMSG">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div>
+      <h1 class="text-danger"> No Record Found !!</h1>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+

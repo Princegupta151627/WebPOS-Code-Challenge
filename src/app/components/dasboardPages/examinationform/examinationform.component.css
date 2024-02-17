@@ -1,0 +1,15 @@
+mat-form-field{
+    margin: 20px;
+    width: 300px;
+}
+ol{
+    list-style: none;
+    font-size: large;
+    
+}
+li{
+    margin: 20px;
+}
+table{
+    border: black;
+}

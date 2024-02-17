@@ -1,0 +1,157 @@
+
+<div class="container-fluid ">
+    <div class="page_box p-3 mt-2" style="color: aliceblue;">
+
+        Exam Schedular Institute</div>
+    <div class="page_content shadow p-3 position-relative">
+        <div class="page_content-data position-absolute">
+  </div>
+  <div style="display: flex; justify-content: flex-start;">
+    <form [formGroup]="form">
+
+        <!-- <dt class="ms-4" style="color: rgb(51, 22, 116);">Program</dt> -->
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Program</mat-label>
+        <mat-select formControlName="prog" >
+          <!-- <mat-option *ngFor="let acc of readData" [value]="acc">{{acc}}</mat-option> -->
+    </mat-select>
+
+    <mat-error>Program is required*</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Program Term</mat-label>
+        <mat-select formControlName="progTerm" >
+         
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+          <mat-option [value]="4">4</mat-option>
+          <mat-option [value]="5">5</mat-option>
+          <mat-option [value]="6">6</mat-option>
+    </mat-select>
+    <mat-error>Program Term is required</mat-error>
+
+      </mat-form-field>
+      <!-- <button class="btn btn-primary active m-1" (click)="searchDetails()"> Search</button> -->
+      <button class="btn btn-primary active m-1"  [disabled]="!form.valid"> Search</button>
+
+
+    </form>
+  </div>
+
+   <table class="table table-bordered">
+      <thead>
+      <tr>
+       
+        
+        <th scope="col"> Institue Branch</th>
+        <th scope="col"> Subject</th>
+        <th scope="col"> OPR 1</th> 
+        <th scope="col"> OPR 2</th>
+        <th scope="col"> COMPILER</th> 
+        <th scope="col"> Examiner's List</th>
+       
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor = "let us of readData |
+        paginate: { 
+          itemsPerPage: 5, 
+          currentPage:page,
+          totalItems:totalLength
+                        }">
+          <th scope="row">{{us}}</th>
+          <td>{{us}}</td>
+        <td></td>
+        
+        <td>
+            <mat-icon color="primary" (click)="open(content)" (click)="OnEdit(us,form)" >edit</mat-icon>
+           
+            </td>
+        
+      </tr>
+      
+      </tbody>
+
+      
+    </table>
+    <pagination-controls class="text-center" (pageChange)="page = $event"></pagination-controls>
+
+    <div fxLayoutAlign="center center" fxFlexFill>
+
+      <ng-template class="modal" #content let-modal style="background-color: rgba(196, 200, 167, 0.5);">
+        
+        <div class="modal-header" style="padding: 0px;">
+          <mat-toolbar class="btn" style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">
+          <h2 class="modal-title" id="modal-basic-title">Schedule Exam</h2>
+          <button  type="button" class=" btn btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </mat-toolbar>
+        </div>
+        <div class="modal-body" style="background-color: rgba(48, 102, 169, 0.171);" >
+          <mat-card fxFlex="100" >
+          
+        
+            <form fxLayoutAlign="stretch" fxLayout="column" [formGroup]="form" >
+                <div appearance="fill" class="full-width mt-3">
+                    <div style="margin-right:3%; color:#6b6b6b;">
+                      <mat-label>Exam Date</mat-label>
+                  </div>
+                    <select style="width: 100%; height: 30px;" required formControlName="id" >
+                      <option [value]="0">--Select Date--</option>
+                    </select>
+                  </div>
+
+                  <div appearance="fill" class="full-width mt-3">
+                    <div style="margin-right:3%; color:#6b6b6b;">
+                      <mat-label>Invigilator/Internal Teacher</mat-label>
+                  </div>
+                    <select style="width: 100%; height: 30px;" required formControlName="id" >
+                      <option [value]="0">--Select Teacher--</option>
+                    </select>
+                  </div>
+                  
+                  <div appearance="fill" class="full-width mt-3">
+                    <div style="margin-right:3%; color:#6b6b6b;">
+                      <mat-label>External Examiner 1</mat-label>
+                  </div>
+                    <select style="width: 100%; height: 30px;" required formControlName="id" >
+                      <option [value]="0">--Select Examiner--</option>
+                    </select>
+                  </div> 
+                  
+                  <div appearance="fill" class="full-width mt-3">
+                    <div style="margin-right:3%; color:#6b6b6b;">
+                      <mat-label>External Examiner 2</mat-label>
+                  </div>
+                    <select style="width: 100%; height: 30px;" required formControlName="id" >
+                      <option [value]="0">--Select Examiner--</option>
+                    </select>
+                  </div>
+                  
+                  <div appearance="fill" class="full-width mt-3">
+                    <div style="margin-right:3%; color:#6b6b6b;">
+                      <mat-label>External Examiner 3</mat-label>
+                  </div>
+                    <select style="width: 100%; height: 30px;" required formControlName="id" >
+                      <option [value]="0">--Select Examiner--</option>
+                    </select>
+                  </div>
+                      
+        </form>
+      </mat-card>
+        </div>
+      
+        <div class="modal-footer">
+          <button *ngIf="!getparamid" (click)="saveDetails(form)"  (click)="modal.close('Save click')"  class=" btn-group btn " style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;" [disabled]="!form.valid">create</button>
+      <button *ngIf="getparamid"   (click)="modal.close('Save click')"  class="btn-group btn " style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;" >Update</button>
+          <button type="submit" class="btn btn-danger"  (click)="modal.close('Save click')">Cancel</button>
+        </div>
+        
+      </ng-template>
+      
+      </div> 
+    
+  </div>
+</div>

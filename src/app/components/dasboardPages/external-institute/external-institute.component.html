@@ -1,0 +1,99 @@
+
+<div class="container-fluid ">
+    <div class="page_box p-3 mt-2" style="color: aliceblue;">
+
+      External Institute/Organization</div>
+    <div class="page_content shadow p-3 position-relative">
+        <div class="page_content-data position-absolute">
+  </div>
+  <button mat-raised-button class="btn m-1 p-2" style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;" (click)="open(content)"><mat-icon>add_circle_outline</mat-icon>New Institute/Organization</button>
+   <table class="table table-bordered">
+      <thead>
+      <tr>
+       
+        
+        <th scope="col"> Code</th>
+        <th scope="col"> Institute Name</th>
+        <th scope="col"> Institute's Email</th> 
+        <th scope="col"> Principal's Email</th>
+        <th scope="col">Edit</th>
+       
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor = "let us of readData |
+        paginate: { 
+          itemsPerPage: 5, 
+          currentPage:page,
+          totalItems:totalLength
+                        }">
+          <th scope="row">{{us}}</th>
+          <td>{{us}}</td>
+        
+        
+        <td>
+          <mat-icon color="primary" (click)="open(content)" (click)="OnEdit(us,form)" >edit</mat-icon>
+         
+          </td>
+        
+      </tr>
+      
+      </tbody>
+      
+    </table>
+    <pagination-controls class="text-center" (pageChange)="page = $event"></pagination-controls>
+
+    <div fxLayoutAlign="center center" fxFlexFill>
+
+      <ng-template class="modal" #content let-modal style="background-color: rgba(196, 200, 167, 0.5);">
+        
+        <div class="modal-header" style="padding: 0px;">
+          <mat-toolbar class="btn" style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">
+          <h2 class="modal-title" id="modal-basic-title">Institute/Organization Details</h2>
+          <button  type="button" class=" btn btn-close " aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </mat-toolbar>
+        </div>
+        <div class="modal-body" style="background-color: rgba(48, 102, 169, 0.171);" >
+          <mat-card fxFlex="100" >
+          
+        
+            <form fxLayoutAlign="stretch" fxLayout="column" [formGroup]="form" >
+              
+            
+            <mat-form-field appearance="fill"  class="full-width">
+                <mat-label>Institute/Organization Code</mat-label>
+                <input matInput placeholder="Enter Institute/Organization Code" required formControlName="name" >
+                <mat-error>Institute/Organization Code is required</mat-error>
+                
+            </mat-form-field>'
+              <mat-form-field appearance="fill"  class="full-width">
+                <mat-label>Institute/Organization Name</mat-label>
+                <input matInput placeholder="Enter Institute/Organization name" required formControlName="name" >
+                <mat-error>Institute/Organization Name is required</mat-error>
+                
+            </mat-form-field>' 
+             <mat-form-field appearance="fill" class="full-width " >
+                <mat-label> Institute/Organization Email </mat-label>
+                <input matInput type="email" placeholder="Enter Institute/Organization email" required>   
+              </mat-form-field>'
+              <mat-form-field appearance="fill" class="full-width " >
+                <mat-label> Principal/Head Email </mat-label>
+                <input matInput type="email" placeholder="Enter Principal/Head email" required>   
+              </mat-form-field>
+                               
+        </form>
+      </mat-card>
+        </div>
+      
+        <div class="modal-footer">
+          <button *ngIf="!getparamid" (click)="saveDetails(form)"  (click)="modal.close('Save click')"  class=" btn-group btn " style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;" [disabled]="!form.valid">create</button>
+      <button *ngIf="getparamid"   (click)="modal.close('Save click')"  class="btn-group btn " style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;" >Update</button>
+          <button type="submit" class="btn btn-danger"  (click)="modal.close('Save click')">Cancel</button>
+        </div>
+        
+      </ng-template>
+      
+      </div> 
+    
+  </div>
+</div>

@@ -1,0 +1,141 @@
+<div   class="container-fluid ">
+
+    <div style="display: flex; justify-content: flex-start;">
+      <form [formGroup]="form">
+  
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Academic Term</mat-label>
+          <mat-select formControlName="acedTerm" required>
+            <mat-option *ngFor="let acc of academicTermData" [value]="acc">{{acc}}</mat-option>
+      </mat-select>
+  
+      <mat-error>Academic Term is required*</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Program </mat-label>
+          <mat-select formControlName="progTerm" required>  
+            <mat-option *ngFor="let data of programTermData" [value]="data.programTermId">{{data.programTerm}}</mat-option>       
+      </mat-select>
+      <mat-error>Program  is required</mat-error>
+        </mat-form-field>
+
+        
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Term</mat-label>
+            <mat-select formControlName="Term" required>       
+              <mat-option [value]="1">1</mat-option>
+              <mat-option [value]="2">2</mat-option>
+              <mat-option [value]="3">3</mat-option>    
+              <mat-option [value]="4">4</mat-option>           
+              <mat-option [value]="5">5</mat-option>           
+              <mat-option [value]="6">6</mat-option>           
+             </mat-select>
+        <mat-error>Term is required</mat-error>
+          </mat-form-field>
+        <button class="btn btn-primary active m-1"  (click)="getInstituteAdmitCardListDetail()"> Search </button>
+        <button class="btn btn-success active m-1" [disabled]="!admitCardListData || admitCardListData.length === 0" (click)="downloadExaminationFormReport()"> <i class="bi bi-download"></i> Download Report </button>
+
+      </form>
+    </div>
+
+
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">S.no</th>
+          <!-- <th scope="col">Academic Term</th> -->
+          <th scope="col">Roll Number</th>
+          <th scope="col">Student Name</th>
+
+          <th scope="col">Form Fees</th>
+          <th scope="col">Paid Fees</th>
+          <th scope="col">Paid On</th>
+          <th scope="col">Filled Date</th>
+          <th scope="col">Verify Date</th>
+    
+          <th scope="col">Form Status</th>
+          <th scope="col">Verified Status By Institute</th>
+          <th scope="col">Verify / Unverify</th>
+          <th scope="col">Download</th>
+
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of admitCardListData; let index = index">
+            <td>{{ index+1 }}</td>
+            <!-- <td>{{ data.academicTerm }}</td> -->
+            <td>{{ data.rollNumber }}</td>
+            <td>{{ data.studentName }}</td>
+            
+            <td>{{ data.formFees }}</td>
+            <td>{{ data.paidFees }}</td>
+            <td>{{ data.paidOn }}</td>
+            <td>{{ data.filledDate }}</td>
+            <td>
+              <span *ngIf="data.formVerified">{{ data.verifyDate }}</span>
+            </td>
+            
+            
+            
+            <td>
+              <span *ngIf="data.formFilled == true" class="text-primary">Filled  <i class="bi bi-check2-circle text-primary"> </i></span>
+              <span *ngIf="data.formFilled == false" class="text-danger">Not Filled <i class="bi bi-x-circle-fill text-danger"></i></span>
+            </td>
+
+            <td>
+              <span *ngIf="data.formVerified == true" class="text-primary">Verified  <i class="bi bi-check2-circle text-primary"></i></span>
+              <span *ngIf="data.formVerified == false" class="text-danger">Not Verified <i class="bi bi-x-circle-fill text-danger"></i></span>
+            </td>
+
+            <td>
+              <span *ngIf="data.formVerified == false" >
+              <button class="btn btn-primary btn-sm active"(click)="open(content,data)"> Verify <i class="bi bi-hand-index-thumb-fill"></i> </button>
+              </span>
+
+              <span *ngIf="data.formVerified == true" >
+                <button class="btn btn-danger btn-sm active"(click)="open(content,data)"> Unverify <i class="bi bi-x-circle-fill"></i> </button>
+                </span>
+           </td>
+
+            <td> 
+              <span *ngIf="data.formFilled == true && data.formVerified == true && data.feePaid == true">
+              <button type="button" class="btn btn-success" (click)="downloadingAdmitCard(data)"> <i class="bi bi-download"></i> Admit Card</button>
+            </span>
+          </td> 
+          </tr>
+        </tbody>
+        </table>
+    </div>
+  
+ 
+
+<div fxLayoutAlign="center center" fxFlexFill>
+  <ng-template class="modal" #content let-modal style="background-color: rgba(196, 200, 167, 0.5);">
+    <div class="modal-header" style="padding: 0px;">
+      <mat-toolbar class="btn" style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">
+        <h2 *ngIf="studentVerifyingData.formVerified == false " class="modal-title" id="modal-basic-title">Are you sure you want to verify ?</h2>
+        <h2 *ngIf="studentVerifyingData.formVerified == true " class="modal-title" id="modal-basic-title">Are you sure you want to unverify ?</h2>
+
+        <button type="button" class=" btn btn-close " aria-label="Close"
+          (click)="modal.dismiss('Cross click')"></button>
+      </mat-toolbar>
+    </div> 
+    <div class="modal-body" style="background-color: rgba(48, 102, 169, 0.171);">
+      <mat-card>
+        <h3>Roll Number :: {{studentVerifyingData.rollNumber}} <br>
+            Student Name :: {{studentVerifyingData.studentName}}
+        </h3>
+    </mat-card>    
+   </div>
+  <div class="modal-footer">
+        <!-- <button *ngIf="studentVerifyingData.formVerified == false " (click)="modal.close('Save click')" (click)="VerifyStudentByInstitute()"  class="btn-group btn m-1 " style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">Verify</button> -->
+        <!-- <button *ngIf="studentVerifyingData.formVerified == true " (click)="modal.close('Save click')" (click)="UnverifyStudentByInstitute()"  class="btn-group btn m-1 " style="background: linear-gradient(to right, rgb(16, 24, 82), #797e86); color: white;">Unverify</button> -->
+        <button  *ngIf="studentVerifyingData.formVerified == false " (click)="modal.close('Save click')" (click)="VerifyStudentByInstitute()"  class="btn-group btn m-1 btn-success">Verify</button>
+        <button *ngIf="studentVerifyingData.formVerified == true " (click)="modal.close('Save click')" (click)="UnverifyStudentByInstitute()"  class="btn-group btn m-1 btn-danger">Unverify</button>
+        <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Cancel</button>    -->
+  </div>
+</ng-template>
+</div>

@@ -1,0 +1,57 @@
+.logo{
+    text-align: center;
+    padding: 2.6rem 1rem;
+}
+ img{
+    width: 50px;
+}
+.mat-icon{
+    vertical-align: center;
+    margin-right: 1rem;
+}
+.mat-divider {
+    border-top-width:2px ;
+    border-color: white;
+}
+.mat-list-item{
+    color: white;
+    font-size: 1rem;
+    height: 44px !important;
+    margin-bottom: 4px;
+    border-radius: 5px;
+    margin: 0.8px;
+}
+.mat-list-item.selected {
+    background-color: white; /* Change this to your desired color */
+    color:rgb(12, 26, 55); /* Change this to your desired text color */
+  }
+  
+.menuitem{
+   color: #94a3b8 !important;
+        font-size: 1rem;
+        height: 44px !important;
+        margin-bottom: 4px;
+        border-radius: 5px;
+        margin: 0.8px;
+}
+.mat-list-item:hover{
+    background: #2c3344 !important;
+    color: white;
+}
+.list-item-active{
+    color:whitesmoke;
+}
+.list-item-active::ng-deep .mat-list-item-content{
+    background: #2c3344 !important;
+    
+}
+.mat-list-item-content:hover{
+    background: #2c3344 !important;
+}
+.mat-subheader{
+    color: #818cf8;
+    font-size: 1rem;
+    font-weight: 100;
+    letter-spacing: 1px;
+    
+}
